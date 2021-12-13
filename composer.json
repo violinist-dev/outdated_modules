@@ -34,6 +34,9 @@
         "sort-packages": true
     },
     "extra": {
+		"violinist": {
+			"one_pull_request_per_package": 0
+		},
         "composer-exit-on-patch-failure": true,
         "drupal-scaffold": {
             "locations": {
