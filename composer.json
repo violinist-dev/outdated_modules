@@ -1,0 +1,96 @@
+{
+    "name": "grasmash/grasmash",
+    "description": "Matthew Grasmick's blog.",
+    "license": "proprietary",
+    "type": "project",
+    "repositories": {
+        "drupal": {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        "asset-packagist": {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    },
+    "require": {
+        "php": ">=7.1",
+        "acquia/blt": "^12.0.0",
+        "composer/installers": "^1.2",
+        "cweagans/composer-patches": "^1.6.5",
+        "drupal/acquia_connector": "^2.0-beta3",
+        "drupal/admin_toolbar": "^2.0.0",
+        "drupal/core": "^9.0.0-beta2",
+        "drupal/core-composer-scaffold": "*",
+        "drupal/ctools": "^3.3.0",
+        "drush/drush": "^10.2"
+    },
+    "require-dev": {
+        "acquia/blt-phpcs": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "composer-exit-on-patch-failure": true,
+        "drupal-scaffold": {
+            "locations": {
+                "web-root": "docroot/"
+            },
+            "file-mapping": {
+                "[web-root]/.htaccess": false
+            }
+        },
+        "enable-patching": true,
+        "patches": {
+            "drupal/writer": {
+                "Add Drupal 9 compatibility": "https://www.drupal.org/files/issues/2020-03-24/drupal9-3122061-1.patch"
+            }
+        },
+        "installer-paths": {
+            "docroot/core": [
+                "type:drupal-core"
+            ],
+            "docroot/libraries/{$name}": [
+                "type:drupal-library",
+                "type:bower-asset",
+                "type:npm-asset"
+            ],
+            "docroot/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "docroot/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "docroot/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "drush/contrib/{$name}": [
+                "type:drupal-drush"
+            ]
+        },
+        "installer-types": [
+            "bower-asset",
+            "npm-asset"
+        ]
+    },
+    "autoload": {
+        "psr-4": {
+            "Acquia\\Blt\\Custom\\": "blt/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Drupal\\Tests\\PHPUnit\\": "tests/phpunit/src/"
+        }
+    },
+    "scripts": {
+        "nuke": [
+            "rm -rf vendor composer.lock docroot/core docroot/modules/contrib docroot/profiles/contrib docroot/themes/contrib",
+            "@composer clearcache --ansi",
+            "@composer install --ansi"
+        ]
+    }
+}
